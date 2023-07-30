@@ -1,7 +1,7 @@
 {
-  "name": "flexml-interview",
+  "name": "flexml-sample",
   "version": "1.0.0",
-  "description": "Sample FlexML application for CarrierX interview",
+  "description": "Sample FlexML application for CarrierX",
   "main": "app.js",
   "directories": {
     "test": "tests"
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schlameel/flexml-interview.git"
+    "url": "git+https://github.com/schlameel/flexml-sample.git"
   },
   "keywords": [
     "carrierx",
@@ -30,9 +30,9 @@
   "author": "Schlameel",
   "license": "GPL-2.0-only",
   "bugs": {
-    "url": "https://github.com/schlameel/flexml-interview/issues"
+    "url": "https://github.com/schlameel/flexml-sample/issues"
   },
-  "homepage": "https://github.com/schlameel/flexml-interview#readme",
+  "homepage": "https://github.com/schlameel/flexml-sample#readme",
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.3",
@@ -56,6 +56,6 @@
     "morgan": "^1.10.0",
     "node-fetch": "^3.3.2",
     "xml": "^1.0.1",
-    "xml2js": "^0.6.2"
+    "xml-js": "^1.6.11"
   }
 }
