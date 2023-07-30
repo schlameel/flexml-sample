@@ -1,2 +1,2 @@
 # flexml-interview
-Sample FlexML application for CarrierX interview
+Sample FlexML application for CarrierX
