@@ -1,9 +1,12 @@
-import BaseModel from './base';
+import FleXmlTag, {IFlexXmlTagProperties} from './flexmltag';
 
-export class Gather extends BaseModel {
-  constructor() {
-    super('Gather');
-    // Move attributes to decorators
+export class Gather extends FleXmlTag {
+  constructor({
+    attributes = undefined,
+    children = undefined,
+    value = undefined,
+  }: IFlexXmlTagProperties = {}) {
+    super('Gather', {attributes, children, value});
   }
 }
 

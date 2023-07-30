@@ -1,8 +1,12 @@
-import BaseModel from './base';
+import FleXmlTag, {IFlexXmlTagProperties} from './flexmltag';
 
-export class Response extends BaseModel {
-  constructor() {
-    super('Response');
+export class Response extends FleXmlTag {
+  constructor({
+    attributes = undefined,
+    children = undefined,
+    value = undefined,
+  }: IFlexXmlTagProperties = {}) {
+    super('Response', {attributes, children, value});
   }
 }
 
