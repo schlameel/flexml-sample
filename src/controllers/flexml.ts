@@ -1,4 +1,5 @@
 //import {inspect} from 'util';
+import {format} from 'url';
 import {Request, Response} from 'express';
 import axios, {AxiosRequestConfig} from 'axios';
 import {Response as ResponseXML} from '../models/response';
@@ -23,10 +24,15 @@ class FlexMLCtrl {
       const name = await this.lookupPhoneNumber(phoneNumber);
       const response = new ResponseXML();
       const gather = new Gather();
-      gather.addAttribute('action', `${req.originalUrl}/joke`);
-      gather.addAttribute('method', 'post');
-      gather.addAttribute('numDigits', '1');
-      gather.addAttribute('finishOnKey', '9');
+      gather.addAttribute(
+        'action',
+        format({
+          protocol: req.protocol,
+          host: req.get('host'),
+          pathname: req.originalUrl + '/joke',
+        })
+      );
+      gather.addAttribute('numDigits', 1);
       gather.addAttribute('validDigits', '9');
       const sayFirst = new Say();
       sayFirst.value = `Hello and thank you for calling,, you are calling from ${this.phoneNumberToNiceText(
