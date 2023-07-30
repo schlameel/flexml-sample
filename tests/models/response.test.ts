@@ -10,24 +10,27 @@ describe('Response XML model', () => {
 
   test('Doc with value', () => {
     const valueDoc = '<Response>Hello!</Response>';
-    const response: Response = new Response();
-    response.value = 'Hello!';
+    const response: Response = new Response({
+      value: 'Hello!',
+    });
     expect(response.toXml()).toBe(valueDoc);
   });
 
   test('Doc with single child', () => {
     const docWithSingleChild =
       '<Response><Say voice="Polly.Joanna"/></Response>';
-    const response: Response = new Response();
-    response.children = [new Say()];
+    const response: Response = new Response({
+      children: [new Say()],
+    });
     expect(response.toXml()).toBe(docWithSingleChild);
   });
 
   test('Doc with multiple children', () => {
     const docWithSingleChild =
       '<Response><Say voice="Polly.Joanna"/><Say voice="Polly.Joanna"/></Response>';
-    const response: Response = new Response();
-    response.children = [new Say(), new Say()];
+    const response: Response = new Response({
+      children: [new Say(), new Say()],
+    });
     expect(response.toXml()).toBe(docWithSingleChild);
   });
 });
