@@ -1,6 +1,6 @@
 import {js2xml} from 'xml-js';
 
-interface IXmlAttributes {
+export interface IFlexXmlAttributes {
   [key: string]: any;
 }
 
@@ -8,21 +8,37 @@ interface Any {
   [key: string]: any;
 }
 
-export interface IXmlBase {
+export interface IFleXmlBase {
   tagName: string;
-  attributes?: IXmlAttributes;
-  children?: BaseModel[];
+  attributes?: IFlexXmlAttributes;
+  children?: FleXmlTag[];
   value?: any;
 }
 
-abstract class BaseModel implements IXmlBase {
+export interface IFlexXmlTagProperties {
+  attributes?: IFlexXmlAttributes;
+  children?: FleXmlTag[];
+  value?: any;
+}
+
+abstract class FleXmlTag implements IFleXmlBase {
   private _tagName: string;
-  private _attributes?: IXmlAttributes;
-  private _children?: BaseModel[];
+  private _attributes?: IFlexXmlAttributes;
+  private _children?: FleXmlTag[];
   private _value?: any;
 
-  constructor(tagName: string) {
+  constructor(
+    tagName: string,
+    {
+      attributes = undefined,
+      children = undefined,
+      value = undefined,
+    }: IFlexXmlTagProperties = {}
+  ) {
     this._tagName = tagName;
+    this._attributes = attributes ? attributes : undefined;
+    this._children = children ? children : undefined;
+    this._value = value ? value : undefined;
   }
 
   get tagName(): string {
@@ -33,19 +49,19 @@ abstract class BaseModel implements IXmlBase {
     this._tagName = tagName;
   }
 
-  get attributes(): IXmlAttributes | undefined {
+  get attributes(): IFlexXmlAttributes | undefined {
     return this._attributes ? this._attributes : undefined;
   }
 
-  set attributes(attributes: IXmlAttributes | undefined) {
+  set attributes(attributes: IFlexXmlAttributes | undefined) {
     this._attributes = attributes;
   }
 
-  get children(): BaseModel[] | undefined {
+  get children(): FleXmlTag[] | undefined {
     return this._children;
   }
 
-  set children(children: BaseModel[] | undefined) {
+  set children(children: FleXmlTag[] | undefined) {
     this._children = children;
   }
 
@@ -111,6 +127,16 @@ abstract class BaseModel implements IXmlBase {
       delete this._attributes[key];
     }
   };
+
+  public getAttribute = (key: string): any | undefined => {
+    if (this._attributes === undefined) return;
+    return this._attributes[key];
+  };
+
+  public hasAttribute = (key: string): boolean => {
+    if (this._attributes === undefined) return false;
+    return Object.prototype.hasOwnProperty.call(this._attributes, key);
+  };
 }
 
-export default BaseModel;
+export default FleXmlTag;
