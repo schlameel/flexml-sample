@@ -1,4 +1,4 @@
-import {Builder} from 'xml2js';
+import {js2xml} from 'xml-js';
 
 interface IXmlAttributes {
   [key: string]: any;
@@ -20,12 +20,6 @@ abstract class BaseModel implements IXmlBase {
   private _attributes?: IXmlAttributes;
   private _children?: BaseModel[];
   private _value?: any;
-  private static _builder: Builder = new Builder({
-    headless: true,
-    renderOpts: {
-      pretty: false,
-    },
-  });
 
   constructor(tagName: string) {
     this._tagName = tagName;
@@ -64,51 +58,44 @@ abstract class BaseModel implements IXmlBase {
   }
 
   protected _getXmlObject = (): Any => {
-    const xmlObject: Any = {};
-    if (
-      this.value === undefined &&
-      this.attributes === undefined &&
-      this.children === undefined
-    ) {
-      xmlObject[this.tagName] = null;
-      return xmlObject;
-    }
-
-    let value: any;
-    if (this.value) {
-      value = this.value;
-    } else {
-      const children: any[] = new Array<any>();
-      if (this._children && Object.keys(this._children).length) {
-        for (const child of this._children) {
-          children.push(child._getXmlObject());
-        }
-        value = children;
-      } else {
-        value = null;
-      }
-    }
+    const xmlObject: Any = {
+      type: 'element',
+      name: this.tagName,
+    };
 
     const attributes: Any = {};
     for (const property in this._attributes) {
       attributes[property] = this._attributes[property];
     }
     if (Object.keys(attributes).length > 0) {
-      xmlObject[this.tagName] = {
-        $: attributes,
-      };
-      if (value) {
-        xmlObject[this.tagName]['_'] = value;
-      }
+      xmlObject.attributes = attributes;
+    }
+
+    if (this.value) {
+      xmlObject.elements = [
+        {
+          type: 'text',
+          text: this.value,
+        },
+      ];
     } else {
-      xmlObject[this.tagName] = value;
+      if (this._children && Object.keys(this._children).length) {
+        const children: any[] = new Array<any>();
+        for (const child of this._children) {
+          children.push(child._getXmlObject());
+        }
+        xmlObject.elements = children;
+      }
     }
 
     return xmlObject;
   };
 
   public toXml = (): string => {
-    return BaseModel._builder.buildObject(this._getXmlObject());
+    const xmlObject = {
+      elements: [this._getXmlObject()],
+    };
+    return js2xml(xmlObject);
   };
 
   public addAttribute = (key: string, value: any) => {
