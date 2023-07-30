@@ -1,0 +1,1 @@
+https://apps.carrierx.com/api/simple_message/?text_or_audio=Welcome%20to%20the%20CarrierX%20Lab.&voice_type=Polly.Joanna&notify_on_key=&notify_email=&notify_text_or_audio=
