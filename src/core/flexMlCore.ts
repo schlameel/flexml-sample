@@ -88,6 +88,7 @@ export const lookupPhoneNumber = async (phoneNumber: string) => {
     };
     const response = await axios(options);
     const data: DidLookup = response.data as DidLookup;
+    console.log(`data: ${data}`);
     if (!Object.prototype.hasOwnProperty.call(data, 'details')) {
       return unknownName;
     }
