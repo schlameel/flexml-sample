@@ -35,7 +35,7 @@ describe('POST /api/flexml', () => {
   });
 
   it('should return a valid <Response/> tag', async () => {
-    const expected = `${prolog}<Response><Gather action="${baseUrl}/api/flexml/joke" numDigits="1" validDigits="9"><Say voice="Polly.Joanna">Hello and thank you for calling,, you are calling from  one,, nine four nine,, five one zero,, seven five four eight</Say><Say voice="Polly.Joanna">Your name is JOHN MCCORMICK</Say></Gather></Response>`;
+    const expected = `${prolog}<Response><Pause length="1"/><Gather action="${baseUrl}/api/flexml/joke" numDigits="1" validDigits="9"><Say voice="Polly.Joanna">Hello and thank you for calling,, you are calling from  one,, nine four nine,, five one zero,, seven five four eight</Say><Say voice="Polly.Joanna">Your name is JOHN MCCORMICK</Say></Gather></Response>`;
     const response = await request(`${baseUrl}`).post('/api/flexml').send(body);
     expect(response.text).toBe(expected);
   });

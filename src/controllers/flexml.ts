@@ -10,6 +10,7 @@ import {
   lookupPhoneNumber,
   phoneNumberAsIndividualNumbers,
 } from '../core/flexMlCore';
+import PauseTag from '../models/pauseTag';
 
 class FlexMLCtrl {
   introduction = async (req: Request, res: Response) => {
@@ -18,6 +19,7 @@ class FlexMLCtrl {
       const name = await lookupPhoneNumber(phoneNumber);
       const response = new ResponseTag({
         children: [
+          new PauseTag(),
           new GatherTag({
             attributes: {
               action: format({
