@@ -24,8 +24,7 @@
   "keywords": [
     "carrierx",
     "flexml",
-    "express",
-    "ngrok"
+    "express"
   ],
   "author": "Schlameel",
   "license": "GPL-2.0-only",
