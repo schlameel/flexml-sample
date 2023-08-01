@@ -21,7 +21,9 @@ class FlexMLCtrl {
           new GatherTag({
             attributes: {
               action: format({
-                protocol: req.protocol,
+                protocol: req.get('host')?.includes('localhost')
+                  ? 'http'
+                  : 'https',
                 host: req.get('host'),
                 pathname: req.originalUrl + '/joke',
               }),
@@ -71,7 +73,9 @@ class FlexMLCtrl {
           }),
           new PlayTag({
             text: format({
-              protocol: req.protocol,
+              protocol: req.get('host')?.includes('localhost')
+                ? 'http'
+                : 'https',
               host: req.get('host'),
               pathname: '/media/rimshot.mp3',
             }),
