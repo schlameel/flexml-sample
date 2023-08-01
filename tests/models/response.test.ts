@@ -10,12 +10,12 @@ describe('Response XML model', () => {
     expect(response.toXml()).toBe(emptyDoc);
   });
 
-  test('Doc with value', () => {
-    const valueDoc = `${prolog}<Response>Hello!</Response>`;
+  test('Doc with text', () => {
+    const textDoc = `${prolog}<Response>Hello!</Response>`;
     const response: ResponseTag = new ResponseTag({
-      value: 'Hello!',
+      text: 'Hello!',
     });
-    expect(response.toXml()).toBe(valueDoc);
+    expect(response.toXml()).toBe(textDoc);
   });
 
   test('Doc with single child', () => {

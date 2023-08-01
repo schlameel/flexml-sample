@@ -10,12 +10,12 @@ describe('Gather XML model', () => {
     expect(gather.toXml()).toBe(emptyDoc);
   });
 
-  test('Doc with value', () => {
-    const valueDoc = `${prolog}<Gather>Hello!</Gather>`;
+  test('Doc with text', () => {
+    const textDoc = `${prolog}<Gather>Hello!</Gather>`;
     const gather: GatherTag = new GatherTag({
-      value: 'Hello!',
+      text: 'Hello!',
     });
-    expect(gather.toXml()).toBe(valueDoc);
+    expect(gather.toXml()).toBe(textDoc);
   });
 
   test('Doc with single child', () => {
