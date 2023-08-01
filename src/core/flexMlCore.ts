@@ -1,18 +1,19 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {DidLookup} from '../models/didLookup';
 
-export const phoneNumberToNiceText = (phoneNumber: string): string => {
+export const fleXmlPause = ',,';
+
+export const phoneNumberAsIndividualNumbers = (phoneNumber: string): string => {
   if (phoneNumber.length !== 11) {
     return phoneNumber;
   }
-  const pause = ',,';
   return (
     numberToWords(phoneNumber[0]) +
-    pause +
+    fleXmlPause +
     numberToWords(phoneNumber.substring(1, 4)) +
-    pause +
+    fleXmlPause +
     numberToWords(phoneNumber.substring(4, 7)) +
-    pause +
+    fleXmlPause +
     numberToWords(phoneNumber.substring(7))
   );
 };
