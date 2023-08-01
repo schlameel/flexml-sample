@@ -1,4 +1,4 @@
-import FleXmlTag, {IFlexXmlAttributes} from './flexmltag';
+import FleXmlTag, {IFlexXmlAttributes} from './fleXmlTag';
 
 export interface IFlexXmlSayTagProperties {
   attributes?: IFlexXmlAttributes;
@@ -6,7 +6,7 @@ export interface IFlexXmlSayTagProperties {
   value?: any;
 }
 
-export class Say extends FleXmlTag {
+export class SayTag extends FleXmlTag {
   constructor({
     attributes = undefined,
     value = undefined,
@@ -18,4 +18,4 @@ export class Say extends FleXmlTag {
   }
 }
 
-export default Say;
+export default SayTag;

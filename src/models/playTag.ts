@@ -1,6 +1,6 @@
-import FleXmlTag, {IFlexXmlTagProperties} from './flexmltag';
+import FleXmlTag, {IFlexXmlTagProperties} from './fleXmlTag';
 
-export class Play extends FleXmlTag {
+export class PlayTag extends FleXmlTag {
   constructor({
     attributes = undefined,
     children = undefined,
@@ -13,4 +13,4 @@ export class Play extends FleXmlTag {
   }
 }
 
-export default Play;
+export default PlayTag;
