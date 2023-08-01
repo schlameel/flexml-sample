@@ -108,10 +108,11 @@ abstract class FleXmlTag implements IFleXmlBase {
   };
 
   public toXml = (): string => {
+    const prolog = '<?xml version="1.0" encoding="UTF-8"?>';
     const xmlObject = {
       elements: [this._getXmlObject()],
     };
-    return js2xml(xmlObject);
+    return prolog + js2xml(xmlObject, {ignoreDeclaration: false});
   };
 
   public addAttribute = (key: string, value: any) => {
