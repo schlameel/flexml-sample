@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // const baseUrl = 'http://localhost:3000';
-const baseUrl = `https://${process.env.NGROK_DOMAIN}`;
+const baseUrl = `${process.env.TEST_PROTOCOL}://${process.env.TEST_DOMAIN}`;
 const prolog = '<?xml version="1.0" encoding="UTF-8"?>';
 
 describe('POST /api/flexml', () => {
@@ -35,7 +35,7 @@ describe('POST /api/flexml', () => {
   });
 
   it('should return a valid <Response/> tag', async () => {
-    const expected = `${prolog}<Response><Gather action="${baseUrl}/api/flexml/joke" numDigits="1" validDigits="9"><Say voice="Polly.Joanna">,,,, Hello and thank you for calling,, you are calling from  one,, nine four nine,, five one zero,, seven five four eight</Say><Say voice="Polly.Joanna">Your name is JOHN MCCORMICK</Say></Gather></Response>`;
+    const expected = `${prolog}<Response><Gather action="${baseUrl}/api/flexml/joke" numDigits="1" validDigits="9"><Say voice="Polly.Joanna">Hello and thank you for calling,, you are calling from  one,, nine four nine,, five one zero,, seven five four eight</Say><Say voice="Polly.Joanna">Your name is JOHN MCCORMICK</Say></Gather></Response>`;
     const response = await request(`${baseUrl}`).post('/api/flexml').send(body);
     expect(response.text).toBe(expected);
   });
