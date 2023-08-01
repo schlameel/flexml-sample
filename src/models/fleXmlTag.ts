@@ -12,33 +12,33 @@ export interface IFleXmlBase {
   tagName: string;
   attributes?: IFlexXmlAttributes;
   children?: FleXmlTag[];
-  value?: any;
+  text?: any;
 }
 
 export interface IFlexXmlTagProperties {
   attributes?: IFlexXmlAttributes;
   children?: FleXmlTag[];
-  value?: any;
+  text?: any;
 }
 
 abstract class FleXmlTag implements IFleXmlBase {
   private _tagName: string;
   private _attributes?: IFlexXmlAttributes;
   private _children?: FleXmlTag[];
-  private _value?: any;
+  private _text?: any;
 
   constructor(
     tagName: string,
     {
       attributes = undefined,
       children = undefined,
-      value = undefined,
+      text = undefined,
     }: IFlexXmlTagProperties = {}
   ) {
     this._tagName = tagName;
     this._attributes = attributes ? attributes : undefined;
     this._children = children ? children : undefined;
-    this._value = value ? value : undefined;
+    this._text = text ? text : undefined;
   }
 
   get tagName(): string {
@@ -65,12 +65,12 @@ abstract class FleXmlTag implements IFleXmlBase {
     this._children = children;
   }
 
-  get value(): any | undefined {
-    return this._value;
+  get text(): any | undefined {
+    return this._text;
   }
 
-  set value(value: any | undefined) {
-    this._value = value;
+  set text(text: any | undefined) {
+    this._text = text;
   }
 
   protected _getXmlObject = (): Any => {
@@ -87,11 +87,11 @@ abstract class FleXmlTag implements IFleXmlBase {
       xmlObject.attributes = attributes;
     }
 
-    if (this.value) {
+    if (this.text) {
       xmlObject.elements = [
         {
           type: 'text',
-          text: this.value,
+          text: this.text,
         },
       ];
     } else {

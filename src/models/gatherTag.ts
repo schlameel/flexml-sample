@@ -4,9 +4,9 @@ export class GatherTag extends FleXmlTag {
   constructor({
     attributes = undefined,
     children = undefined,
-    value = undefined,
+    text = undefined,
   }: IFlexXmlTagProperties = {}) {
-    super('Gather', {attributes, children, value});
+    super('Gather', {attributes, children, text});
   }
 }
 

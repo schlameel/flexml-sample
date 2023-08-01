@@ -4,9 +4,9 @@ export class PlayTag extends FleXmlTag {
   constructor({
     attributes = undefined,
     children = undefined,
-    value = undefined,
+    text = undefined,
   }: IFlexXmlTagProperties = {}) {
-    super('Play', {attributes, children, value});
+    super('Play', {attributes, children, text});
     if (!this.hasAttribute('voice')) {
       this.addAttribute('voice', 'Polly.Joanna');
     }

@@ -4,9 +4,9 @@ export class ResponseTag extends FleXmlTag {
   constructor({
     attributes = undefined,
     children = undefined,
-    value = undefined,
+    text = undefined,
   }: IFlexXmlTagProperties = {}) {
-    super('Response', {attributes, children, value});
+    super('Response', {attributes, children, text});
   }
 }
 
