@@ -2,16 +2,15 @@ import FleXmlTag, {IFlexXmlAttributes} from './fleXmlTag';
 
 export interface IFlexXmlSayTagProperties {
   attributes?: IFlexXmlAttributes;
-  children?: FleXmlTag[];
-  value?: any;
+  text?: any;
 }
 
 export class SayTag extends FleXmlTag {
   constructor({
     attributes = undefined,
-    value = undefined,
+    text = undefined,
   }: IFlexXmlSayTagProperties = {}) {
-    super('Say', {attributes, value});
+    super('Say', {attributes, text: text});
     if (!this.hasAttribute('voice')) {
       this.addAttribute('voice', 'Polly.Joanna');
     }
