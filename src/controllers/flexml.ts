@@ -1,35 +1,34 @@
-import {inspect} from 'util';
+// import {inspect} from 'util';
 import {format} from 'url';
 import {Request, Response} from 'express';
-import {Response as ResponseXML} from '../models/response';
-import {Say} from '../models/say';
-import Gather from '../models/gather';
-import Play from '../models/play';
+import {ResponseTag} from '../models/responseTag';
+import {SayTag} from '../models/sayTag';
+import GatherTag from '../models/gatherTag';
+import PlayTag from '../models/playTag';
 import {lookupPhoneNumber, phoneNumberToNiceText} from '../core/flexMlCore';
 
 class FlexMLCtrl {
   introduction = async (req: Request, res: Response) => {
     try {
-      console.debug(`body:\n${inspect(req.body)}`);
       const phoneNumber = req.body['From'];
       const name = await lookupPhoneNumber(phoneNumber);
-      const response = new ResponseXML();
-      const gather = new Gather();
+      const response = new ResponseTag();
+      const gather = new GatherTag();
       gather.addAttribute(
         'action',
         format({
-          protocol: req.protocol,
+          protocol: req.get('host')?.includes('ngrok') ? 'https' : 'http',
           host: req.get('host'),
           pathname: req.originalUrl + '/joke',
         })
       );
       gather.addAttribute('numDigits', 1);
       gather.addAttribute('validDigits', '9');
-      const sayFirst = new Say();
+      const sayFirst = new SayTag();
       sayFirst.value = `,,,, Hello and thank you for calling,, you are calling from ${phoneNumberToNiceText(
         phoneNumber
       )}`;
-      const saySecond = new Say();
+      const saySecond = new SayTag();
       saySecond.value = `Your name is ${name}`;
       gather.children = [sayFirst, saySecond];
       response.children = [gather];
@@ -56,15 +55,15 @@ class FlexMLCtrl {
 
   joke = async (req: Request, res: Response) => {
     try {
-      const response = new ResponseXML({
+      const response = new ResponseTag({
         children: [
-          new Say({
+          new SayTag({
             value:
               'A horse walks into a bar. the bartender says,, why the long face?',
           }),
-          new Play({
+          new PlayTag({
             value: format({
-              protocol: req.protocol,
+              protocol: req.get('host')?.includes('ngrok') ? 'https' : 'http',
               host: req.get('host'),
               pathname: '/media/rimshot.mp3',
             }),
@@ -93,9 +92,9 @@ class FlexMLCtrl {
   };
 
   private errorResponse = (errorMessage: string): string => {
-    const response = new ResponseXML({
+    const response = new ResponseTag({
       children: [
-        new Say({
+        new SayTag({
           value: `There was an error.  The error message is,,, ${errorMessage}`,
         }),
       ],
