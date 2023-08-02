@@ -1,7 +1,7 @@
 import * as express from 'express';
 import {Express, Router} from 'express';
 
-import FlexMLCtrl from './controllers/flexml';
+import FlexMLCtrl from './controllers/flexml.route';
 
 function setRoutes(app: Express): void {
   const router: Router = express.Router();
