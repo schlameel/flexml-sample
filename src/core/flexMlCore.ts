@@ -3,7 +3,7 @@ import {DidLookup} from '../models/didLookup';
 
 export const fleXmlPause = ',,';
 
-export const phoneNumberAsIndividualNumbers = (phoneNumber: string): string => {
+export const sayablePhoneNumber = (phoneNumber: string): string => {
   if (phoneNumber.length !== 11) {
     return phoneNumber;
   }
@@ -69,7 +69,7 @@ const numberToWords = (number: string): string => {
   return words;
 };
 
-export const lookupPhoneNumber = async (phoneNumber: string) => {
+export const lookupPhoneNumberDetails = async (phoneNumber: string) => {
   const baseUrl = 'https://api.carrierx.com/core/v2/lookup/dids/';
   const queryParams = '?cnam=true';
   const unknownName = 'unknown name';
@@ -89,14 +89,13 @@ export const lookupPhoneNumber = async (phoneNumber: string) => {
     };
     const response = await axios(options);
     const data: DidLookup = response.data as DidLookup;
-    console.log(`data: ${data}`);
-    if (!Object.prototype.hasOwnProperty.call(data, 'details')) {
-      return unknownName;
-    }
-    if (!Object.prototype.hasOwnProperty.call(data.details, 'cnam')) {
-      return unknownName;
-    }
-    if (!Object.prototype.hasOwnProperty.call(data.details?.cnam, 'name')) {
+    if (
+      !(
+        Object.prototype.hasOwnProperty.call(data, 'details') &&
+        Object.prototype.hasOwnProperty.call(data.details, 'cnam') &&
+        Object.prototype.hasOwnProperty.call(data.details?.cnam, 'name')
+      )
+    ) {
       return unknownName;
     }
     return data.details?.cnam?.name;

@@ -7,8 +7,8 @@ import GatherTag from '../models/gatherTag';
 import PlayTag from '../models/playTag';
 import {
   fleXmlPause,
-  lookupPhoneNumber,
-  phoneNumberAsIndividualNumbers,
+  lookupPhoneNumberDetails,
+  sayablePhoneNumber,
 } from '../core/flexMlCore';
 import PauseTag from '../models/pauseTag';
 
@@ -16,7 +16,7 @@ class FlexMLCtrl {
   introduction = async (req: Request, res: Response) => {
     try {
       const phoneNumber = req.body['From'];
-      const name = await lookupPhoneNumber(phoneNumber);
+      const name = await lookupPhoneNumberDetails(phoneNumber);
       const response = new ResponseTag({
         children: [
           new PauseTag(),
@@ -34,7 +34,7 @@ class FlexMLCtrl {
             },
             children: [
               new SayTag({
-                text: `Hello and thank you for calling${fleXmlPause} you are calling from ${phoneNumberAsIndividualNumbers(
+                text: `Hello and thank you for calling${fleXmlPause} you are calling from ${sayablePhoneNumber(
                   phoneNumber
                 )}`,
               }),
