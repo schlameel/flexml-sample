@@ -1,6 +1,6 @@
 import {js2xml} from 'xml-js';
 
-export interface IFlexXmlAttributes {
+export interface FlexMLAttributes {
   [key: string]: any;
 }
 
@@ -8,23 +8,23 @@ interface Any {
   [key: string]: any;
 }
 
-export interface IFleXmlBase {
+export interface FlexMLBase {
   tagName: string;
-  attributes?: IFlexXmlAttributes;
-  children?: FleXmlTag[];
+  attributes?: FlexMLAttributes;
+  children?: FlexMLTag[];
   text?: any;
 }
 
-export interface IFlexXmlTagProperties {
-  attributes?: IFlexXmlAttributes;
-  children?: FleXmlTag[];
+export interface FlexMLTagProperties {
+  attributes?: FlexMLAttributes;
+  children?: FlexMLTag[];
   text?: any;
 }
 
-abstract class FleXmlTag implements IFleXmlBase {
+abstract class FlexMLTag implements FlexMLBase {
   private _tagName: string;
-  private _attributes?: IFlexXmlAttributes;
-  private _children?: FleXmlTag[];
+  private _attributes?: FlexMLAttributes;
+  private _children?: FlexMLTag[];
   private _text?: any;
 
   constructor(
@@ -33,7 +33,7 @@ abstract class FleXmlTag implements IFleXmlBase {
       attributes = undefined,
       children = undefined,
       text = undefined,
-    }: IFlexXmlTagProperties = {}
+    }: FlexMLTagProperties = {}
   ) {
     this._tagName = tagName;
     this._attributes = attributes ? attributes : undefined;
@@ -49,19 +49,19 @@ abstract class FleXmlTag implements IFleXmlBase {
     this._tagName = tagName;
   }
 
-  get attributes(): IFlexXmlAttributes | undefined {
+  get attributes(): FlexMLAttributes | undefined {
     return this._attributes ? this._attributes : undefined;
   }
 
-  set attributes(attributes: IFlexXmlAttributes | undefined) {
+  set attributes(attributes: FlexMLAttributes | undefined) {
     this._attributes = attributes;
   }
 
-  get children(): FleXmlTag[] | undefined {
+  get children(): FlexMLTag[] | undefined {
     return this._children;
   }
 
-  set children(children: FleXmlTag[] | undefined) {
+  set children(children: FlexMLTag[] | undefined) {
     this._children = children;
   }
 
@@ -140,4 +140,4 @@ abstract class FleXmlTag implements IFleXmlBase {
   };
 }
 
-export default FleXmlTag;
+export default FlexMLTag;
