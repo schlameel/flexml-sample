@@ -27,9 +27,9 @@ describe('Gather XML model', () => {
   });
 
   test('Doc with multiple children', () => {
-    const docWithSingleChild = `${prolog}<Gather><Say voice="Polly.Joanna"/><Say voice="Polly.Joanna"/></Gather>`;
+    const docWithSingleChild = `${prolog}<Gather><Say voice="Polly.Joanna">Hello</Say><Say voice="Polly.Joanna">There</Say></Gather>`;
     const gather: GatherTag = new GatherTag({
-      children: [new SayTag(), new SayTag()],
+      children: [new SayTag({text: 'Hello'}), new SayTag({text: 'There'})],
     });
     expect(gather.toXml()).toBe(docWithSingleChild);
   });
@@ -48,7 +48,7 @@ describe('Gather XML model', () => {
       attributes: {
         action: '/api/flexml/joke',
         method: 'post',
-        numDigits: '1',
+        numDigits: 1,
         finishOnKey: '9',
         validDigits: '9',
       },
@@ -66,16 +66,16 @@ describe('Gather XML model', () => {
   });
 
   test('Doc with multiple attributes, multiple children', () => {
-    const doc = `${prolog}<Gather action="/api/flexml/joke" method="post" numDigits="1" finishOnKey="9" validDigits="9"><Say voice="Polly.Joanna"/><Say voice="Polly.Joanna"/></Gather>`;
+    const doc = `${prolog}<Gather action="/api/flexml/joke" method="post" numDigits="1" finishOnKey="9" validDigits="9"><Say voice="Polly.Joanna">Hello</Say><Say voice="Polly.Joanna">There</Say></Gather>`;
     const gather: GatherTag = new GatherTag({
       attributes: {
         action: '/api/flexml/joke',
         method: 'post',
-        numDigits: '1',
+        numDigits: 1,
         finishOnKey: '9',
         validDigits: '9',
       },
-      children: [new SayTag(), new SayTag()],
+      children: [new SayTag({text: 'Hello'}), new SayTag({text: 'There'})],
     });
     expect(gather.toXml()).toBe(doc);
   });
