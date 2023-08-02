@@ -17,18 +17,17 @@ class FlexMLCtrl {
     try {
       const phoneNumber = req.body['From'];
       const name = await lookupPhoneNumberDetails(phoneNumber);
+      const jokeUrl = format({
+        protocol: req.get('host')?.includes('localhost') ? 'http' : 'https',
+        host: req.get('host'),
+        pathname: req.originalUrl + '/joke',
+      });
       const response = new ResponseTag({
         children: [
           new PauseTag(),
           new GatherTag({
             attributes: {
-              action: format({
-                protocol: req.get('host')?.includes('localhost')
-                  ? 'http'
-                  : 'https',
-                host: req.get('host'),
-                pathname: req.originalUrl + '/joke',
-              }),
+              action: jokeUrl,
               numDigits: 1,
               validDigits: '9',
             },
@@ -47,65 +46,46 @@ class FlexMLCtrl {
       });
       res.contentType('application/xml').status(200).send(response.toXml());
     } catch (error: unknown) {
-      if (typeof error === 'string') {
-        res
-          .contentType('application/xml')
-          .status(500)
-          .send(this.errorResponse(error));
-      } else if (error instanceof Error) {
-        res
-          .contentType('application/xml')
-          .status(500)
-          .send(this.errorResponse(error.message));
-      } else {
-        res
-          .contentType('application/xml')
-          .status(500)
-          .send(this.errorResponse('unknown error'));
-      }
+      res
+        .contentType('application/xml')
+        .status(500)
+        .send(this.errorResponse(error));
     }
   };
 
   joke = async (req: Request, res: Response) => {
     try {
+      const rimShotUrl = format({
+        protocol: req.get('host')?.includes('localhost') ? 'http' : 'https',
+        host: req.get('host'),
+        pathname: '/media/rimshot.mp3',
+      });
       const response = new ResponseTag({
         children: [
           new SayTag({
             text: `A horse walks into a bar. the bartender says${fleXmlPause} why the long face?`,
           }),
           new PlayTag({
-            text: format({
-              protocol: req.get('host')?.includes('localhost')
-                ? 'http'
-                : 'https',
-              host: req.get('host'),
-              pathname: '/media/rimshot.mp3',
-            }),
+            text: rimShotUrl,
           }),
         ],
       });
       res.contentType('application/xml').status(200).send(response.toXml());
     } catch (error: unknown) {
-      if (typeof error === 'string') {
-        res
-          .contentType('application/xml')
-          .status(500)
-          .send(this.errorResponse(error));
-      } else if (error instanceof Error) {
-        res
-          .contentType('application/xml')
-          .status(500)
-          .send(this.errorResponse(error.message));
-      } else {
-        res
-          .contentType('application/xml')
-          .status(500)
-          .send(this.errorResponse('unknown error'));
-      }
+      res
+        .contentType('application/xml')
+        .status(500)
+        .send(this.errorResponse(error));
     }
   };
 
-  private errorResponse = (errorMessage: string): string => {
+  private errorResponse = (error: unknown): string => {
+    let errorMessage = 'unknown error';
+    if (typeof error === 'string') {
+      errorMessage = error;
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+    }
     const response = new ResponseTag({
       children: [
         new SayTag({
