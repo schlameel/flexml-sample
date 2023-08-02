@@ -1,15 +1,21 @@
-import FleXmlTag, {IFlexXmlAttributes} from './fleXmlTag';
+import FlexMLTag, {FlexMLAttributes} from './fleXmlTag';
 
-export interface IFlexXmlSayTagProperties {
-  attributes?: IFlexXmlAttributes;
+export interface SayTagAttributes extends FlexMLAttributes {
+  loop?: number;
+  loopPause?: number;
+  voice?: string;
+}
+
+export interface SayTagProperties {
+  attributes?: SayTagAttributes;
   text?: any;
 }
 
-export class SayTag extends FleXmlTag {
+export class SayTag extends FlexMLTag {
   constructor({
     attributes = undefined,
     text = undefined,
-  }: IFlexXmlSayTagProperties = {}) {
+  }: SayTagProperties = {}) {
     super('Say', {attributes, text: text});
     if (!this.hasAttribute('voice')) {
       this.addAttribute('voice', 'Polly.Joanna');

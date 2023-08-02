@@ -1,6 +1,6 @@
-import FleXmlTag from './fleXmlTag';
+import FlexMLTag, {FlexMLAttributes} from './fleXmlTag';
 
-export interface PauseTagAttributes {
+export interface PauseTagAttributes extends FlexMLAttributes {
   length?: number;
   minNoise?: number;
   minSilence?: number;
@@ -12,7 +12,7 @@ export interface PauseTagProperties {
   attributes?: PauseTagAttributes;
 }
 
-export class PauseTag extends FleXmlTag {
+export class PauseTag extends FlexMLTag {
   constructor({attributes = undefined}: PauseTagProperties = {}) {
     super('Pause', {attributes});
     if (!this.hasAttribute('length')) {
