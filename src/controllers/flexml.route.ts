@@ -17,33 +17,45 @@ class FlexMLCtrl {
     try {
       const phoneNumber = req.body['From'];
       const name = await lookupPhoneNumberDetails(phoneNumber);
-      const jokeUrl = format({
+      const jokeCallbackUrl = format({
         protocol: req.get('host')?.includes('localhost') ? 'http' : 'https',
         host: req.get('host'),
         pathname: req.originalUrl + '/joke',
       });
+      // <Response>
       const response = new ResponseTag({
         children: [
+          // <Pause length="1"/>
           new PauseTag(),
+          // <Gather action="https://flexml.schlameel.com/api/flexml/joke" numDigits="1" validDigits="9">
           new GatherTag({
             attributes: {
-              action: jokeUrl,
+              action: jokeCallbackUrl,
               numDigits: 1,
               validDigits: '9',
             },
             children: [
+              // <Say>Hello and thank you for calling,, you are calling from one eight zero zero,, five five five,, one two three four</Say>
               new SayTag({
                 text: `Hello and thank you for calling${fleXmlPause} you are calling from ${sayablePhoneNumber(
                   phoneNumber
                 )}`,
               }),
+              // <Say>Your name is BOB SMITH</Say>
               new SayTag({
                 text: `Your name is ${name}`,
               }),
+              // <Say>Press 9 to hear a joke</Say>
+              // Comment the following for Easter egg mode
+              new SayTag({
+                text: 'Press 9 to hear a joke',
+              }),
             ],
           }),
+          // </Gather>
         ],
       });
+      // </Response>
       res.contentType('application/xml').status(200).send(response.toXml());
     } catch (error: unknown) {
       res
@@ -60,16 +72,20 @@ class FlexMLCtrl {
         host: req.get('host'),
         pathname: '/media/rimshot.mp3',
       });
+      // <Response>
       const response = new ResponseTag({
         children: [
+          // <Say>A horse walks into a bar. the bartender says,, why the long face?</Say>
           new SayTag({
             text: `A horse walks into a bar. the bartender says${fleXmlPause} why the long face?`,
           }),
+          // <Play>https://flexml.schlameel.com/public/media/rimshot.mp3</Play>
           new PlayTag({
             text: rimShotUrl,
           }),
         ],
       });
+      // </Response>
       res.contentType('application/xml').status(200).send(response.toXml());
     } catch (error: unknown) {
       res
