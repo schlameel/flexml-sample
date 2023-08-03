@@ -1,6 +1,6 @@
 # flexml-sample
 ## Sample FlexML application for CarrierX
-A pair of FlexML handlers that defines the responses to a received phone call and possible caller DTMF.
+A pair of FlexML handlers that define the responses to a received phone call and possible caller DTMF.
 
 One handler at `/api/flexml` will:
 - welcome the caller
