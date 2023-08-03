@@ -70,7 +70,7 @@ describe('POST /api/flexml/joke', () => {
   });
 
   it('should return a valid <Response/> tag', async () => {
-    const expected = `${prolog}<Response><Say voice="Polly.Joanna">A horse walks into a bar. the bartender says,, why the long face?</Say><Play voice="Polly.Joanna">${baseUrl}/media/rimshot.mp3</Play></Response>`;
+    const expected = `${prolog}<Response><Say voice="Polly.Joanna">Please welcome to the stage ,, Matthew!</Say><Say voice="Polly.Matthew">A horse walks into a bar. the bartender says,, why the long face?</Say><Play voice="Polly.Joanna">${baseUrl}/media/rimshot.mp3</Play></Response>`;
     const response = await request(`${baseUrl}`)
       .post('/api/flexml/joke')
       .send(body);

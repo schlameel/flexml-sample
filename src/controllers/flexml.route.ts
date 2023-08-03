@@ -35,17 +35,18 @@ class FlexMLCtrl {
               validDigits: '9',
             },
             children: [
-              // <Say>Hello and thank you for calling,, you are calling from one eight zero zero,, five five five,, one two three four</Say>
+              // SayTag changes the default voice to Polly.Joanne
+              // <Say voice="Polly.Joanne">Hello and thank you for calling,, you are calling from one eight zero zero,, five five five,, one two three four</Say>
               new SayTag({
                 text: `Hello and thank you for calling${fleXmlPause} you are calling from ${sayablePhoneNumber(
                   phoneNumber
                 )}`,
               }),
-              // <Say>Your name is BOB SMITH</Say>
+              // <Say voice="Polly.Joanne">Your name is BOB SMITH</Say>
               new SayTag({
                 text: `Your name is ${name}`,
               }),
-              // <Say>Press 9 to hear a joke</Say>
+              // <Say voice="Polly.Joanne">Press 9 to hear a joke</Say>
               // Comment the following for Easter egg mode
               new SayTag({
                 text: 'Press 9 to hear a joke',
@@ -75,8 +76,15 @@ class FlexMLCtrl {
       // <Response>
       const response = new ResponseTag({
         children: [
-          // <Say>A horse walks into a bar. the bartender says,, why the long face?</Say>
+          // <Say voice="Polly.Joanne">Please welcome to the stage ,, Matthew!</Say>
           new SayTag({
+            text: `Please welcome to the stage ${fleXmlPause} Matthew!`,
+          }),
+          // <Say voice="Polly.Matthew">A horse walks into a bar. the bartender says,, why the long face?</Say>
+          new SayTag({
+            attributes: {
+              voice: 'Polly.Matthew',
+            },
             text: `A horse walks into a bar. the bartender says${fleXmlPause} why the long face?`,
           }),
           // <Play>https://flexml.schlameel.com/public/media/rimshot.mp3</Play>
