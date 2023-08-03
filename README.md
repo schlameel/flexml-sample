@@ -29,10 +29,10 @@ cp dotenv.sample .env
 Edit `.env` and set `ACCESS_TOKEN` to your CarrierX access token
 
 Transpile TypeScript to Javascript
-```npm compile```
+```npm run compile```
 
 ## Run the application
-```npm start```
+```npm run start```
 
 ## Test
 Ensure the application is running.  In `.env`, ensure `TEST_PROTOCOL` and `TEST_DOMAIN` are set appropriately. For `TEST_PROTOCOL`, `https` for ngrok, `http` for localhost. For `TEST_DOMAIN`, set the FQDN or if testing locally, identify the appropriate port number if it is not 80, such as `localhost:3000`.
