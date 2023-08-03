@@ -35,7 +35,18 @@ describe('POST /api/flexml', () => {
   });
 
   it('should return a valid <Response/> tag', async () => {
-    const expected = `${prolog}<Response><Pause length="1"/><Gather action="${baseUrl}/api/flexml/joke" numDigits="1" validDigits="9"><Say voice="Polly.Joanna">Hello and thank you for calling,, you are calling from  one,, nine four nine,, five one zero,, seven five four eight</Say><Say voice="Polly.Joanna">Your name is JOHN MCCORMICK</Say><Say voice="Polly.Joanna">Press 9 to hear a joke</Say></Gather></Response>`;
+    const expected =
+      prolog +
+      '<Response>' +
+      '<Pause length="1"/>' +
+      '<Gather action="' +
+      baseUrl +
+      '/api/flexml/joke" numDigits="1" validDigits="9">' +
+      '<Say voice="Polly.Joanna">Hello and thank you for calling,, you are calling from  one,, nine four nine,, five one zero,, seven five four eight</Say>' +
+      '<Say voice="Polly.Joanna">Your name is JOHN MCCORMICK</Say>' +
+      '<Say voice="Polly.Joanna">Press 9 to hear a joke</Say>' +
+      '</Gather>' +
+      '</Response>';
     const response = await request(`${baseUrl}`).post('/api/flexml').send(body);
     expect(response.text).toBe(expected);
   });
@@ -70,7 +81,15 @@ describe('POST /api/flexml/joke', () => {
   });
 
   it('should return a valid <Response/> tag', async () => {
-    const expected = `${prolog}<Response><Say voice="Polly.Joanna">Please welcome to the stage ,, Matthew!</Say><Say voice="Polly.Matthew">A horse walks into a bar. the bartender says,, why the long face?</Say><Play voice="Polly.Joanna">${baseUrl}/media/rimshot.mp3</Play></Response>`;
+    const expected =
+      prolog +
+      '<Response>' +
+      '<Say voice="Polly.Joanna">Please welcome to the stage ,, Matthew!</Say>' +
+      '<Say voice="Polly.Matthew">A horse walks into a bar. the bartender says,, why the long face?</Say>' +
+      '<Play voice="Polly.Joanna">' +
+      baseUrl +
+      '/media/rimshot.mp3</Play>' +
+      '</Response>';
     const response = await request(`${baseUrl}`)
       .post('/api/flexml/joke')
       .send(body);
